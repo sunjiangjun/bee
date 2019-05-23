@@ -39,6 +39,9 @@ func main() {
 	log.SetFlags(0)
 
 	args := flag.Args()
+	if len(args)==0 {
+		args=append(args,"pack")
+	}
 
 	if len(args) < 1 {
 		cmd.Usage()
