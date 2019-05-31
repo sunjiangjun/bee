@@ -30,8 +30,7 @@ import (
 
 const dockerBuildTemplate = `FROM {{.BaseImage}}
 
-# Godep for vendoring
-RUN go get github.com/tools/godep
+# Go mod version>=1.12
 
 # Recompile the standard library without CGO
 RUN CGO_ENABLED=0 go install -a std
@@ -44,7 +43,7 @@ ENTRYPOINT (cd $APP_DIR && ./{{.Entrypoint}})
 ADD . $APP_DIR
 
 # Compile the binary and statically link
-RUN cd $APP_DIR && CGO_ENABLED=0 godep go build -ldflags '-d -w -s'
+RUN cd $APP_DIR && CGO_ENABLED=0 go build -ldflags '-d -w -s'
 
 EXPOSE {{.Expose}}
 `
@@ -78,7 +77,7 @@ var (
 
 func init() {
 	fs := flag.NewFlagSet("dockerize", flag.ContinueOnError)
-	fs.StringVar(&baseImage, "image", "library/golang", "Set the base image of the Docker container.")
+	fs.StringVar(&baseImage, "image", "golang:latest", "Set the base image of the Docker container.")
 	fs.StringVar(&expose, "expose", "8080", "Port(s) to expose in the Docker container.")
 	CmdDockerize.Flag = *fs
 	commands.AvailableCommands = append(commands.AvailableCommands, CmdDockerize)

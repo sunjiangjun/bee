@@ -499,6 +499,8 @@ func packApp(cmd *commands.Command, args []string) int {
 			binPath += ".exe"
 		}
 
+		beeLogger.Log.Infof("binPath: ",binPath)
+
 		args := []string{"build", "-o", binPath}
 		if len(buildArgs) > 0 {
 			args = append(args, strings.Fields(buildArgs)...)
@@ -513,6 +515,10 @@ func packApp(cmd *commands.Command, args []string) int {
 		execmd.Stdout = os.Stdout
 		execmd.Stderr = os.Stderr
 		execmd.Dir = thePath
+
+
+		beeLogger.Log.Infof("cmd: ",execmd.Dir,execmd.Args)
+
 		err = execmd.Run()
 		if err != nil {
 			beeLogger.Log.Fatal(err.Error())
@@ -523,6 +529,7 @@ func packApp(cmd *commands.Command, args []string) int {
 
 	switch format {
 	case "zip":
+	case "tar":
 	default:
 		format = "tar.gz"
 	}

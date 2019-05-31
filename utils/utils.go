@@ -319,20 +319,20 @@ func CheckEnv(appname string) (apppath, packpath string, err error) {
 
 	// In case of multiple paths in the GOPATH, by default
 	// we use the first path
-	gopath := gps[0]
-
+	//gopath := gps[0]
+	gopath ,_:= os.Getwd()
 	beeLogger.Log.Warn("You current workdir is not inside $GOPATH/src.")
 	beeLogger.Log.Debugf("GOPATH: %s", FILE(), LINE(), gopath)
 
-	gosrcpath := filepath.Join(gopath, "src")
-	apppath = filepath.Join(gosrcpath, appname)
+	//gosrcpath := filepath.Join(gopath, "src")
+	apppath = filepath.Join(gopath, appname)
 
 	if _, e := os.Stat(apppath); !os.IsNotExist(e) {
 		err = fmt.Errorf("cannot create application without removing '%s' first", apppath)
 		beeLogger.Log.Errorf("Path '%s' already exists", apppath)
 		return
 	}
-	packpath = strings.Join(strings.Split(apppath[len(gosrcpath)+1:], string(filepath.Separator)), "/")
+	packpath = strings.Join(strings.Split(apppath[len(gopath)+1:], string(filepath.Separator)), "/")
 	return
 }
 

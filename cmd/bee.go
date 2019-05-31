@@ -25,6 +25,7 @@ import (
 	_ "github.com/beego/bee/cmd/commands/generate"
 	_ "github.com/beego/bee/cmd/commands/hprose"
 	_ "github.com/beego/bee/cmd/commands/migrate"
+	_ "github.com/beego/bee/cmd/commands/mod"
 	_ "github.com/beego/bee/cmd/commands/new"
 	_ "github.com/beego/bee/cmd/commands/pack"
 	_ "github.com/beego/bee/cmd/commands/rs"
